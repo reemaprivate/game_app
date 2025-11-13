@@ -7,6 +7,9 @@ class SecretSantasController < ApplicationController
   end
 
   def create
+    #create employees data
+    CsvImportService.import_file params[:employee_csv].path
+
 
   end
 end
