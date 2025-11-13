@@ -10,6 +10,7 @@ class SecretSantasController < ApplicationController
     begin
       #create employees data
       CsvImportService.import_file params[:employee_csv].path
+      CsvImportService.import_past_data params[:prev_csv].path,Date.today.prev_year.year
       @data = SecretSantaSelectionService.new().roulette
       output_path = Rails.root.join('tmp', 'secret_santa_result.csv')
       CsvExportService.export_file(@data,output_path)
