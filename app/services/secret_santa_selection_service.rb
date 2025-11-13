@@ -25,6 +25,8 @@ class SecretSantaSelectionService
   end
 
   def roulette
+    #delete if secret santa selection for this year was run before and then re-run logic
+    SecretSantaAssociation.this_year.delete_all if SecretSantaAssociation.this_year.exists?
     employees = Employee.all.to_a
     data = []
     past_year_pairs = {}
