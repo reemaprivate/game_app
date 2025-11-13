@@ -8,7 +8,12 @@ class SecretSantasController < ApplicationController
 
   def create
     begin
-      #create employees data
+      #check for uploaded files
+      if params[:employee_csv].blank? || params[:prev_csv].blank?
+        flash[:alert] = "Both the CSV files are required!"
+        render :index and return
+      end
+
       CsvImportService.import_file params[:employee_csv].path
       CsvImportService.import_past_data params[:prev_csv].path,Date.today.prev_year.year
       @data = SecretSantaSelectionService.new().roulette

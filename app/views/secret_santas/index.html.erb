@@ -1,13 +1,77 @@
+<h1>Secret Santa Assignment</h1>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 40px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    form {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 30px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        background-color: #f9f9f9;
+    }
+
+    div.form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        padding: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<% if flash[:notice] %>
+  <div style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
 <%= form_with url: secret_santas_path,  multipart: true do |f| %>
-  <div>
+  <div class="form-group">
     <label>Employee Details(CSV):</label><br>
     <%= f.file_field :employee_csv, required: true%>
   </div>
 
-  <div>
+  <div class="form-group">
     <label>Previous Year's Details(CSV):</label><br>
     <%= f.file_field :prev_csv %>
   </div>
 
   <%= f.submit "Generate Secret Santa List"  %>
 <% end %>
+
