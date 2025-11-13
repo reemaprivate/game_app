@@ -1,0 +1,13 @@
+<%= form_with url: secret_santas_path,  multipart: true do |f| %>
+  <div>
+    <label>Employee Details(CSV):</label><br>
+    <%= f.file_field :employee_csv, required: true%>
+  </div>
+
+  <div>
+    <label>Previous Year's Details(CSV):</label><br>
+    <%= f.file_field :prev_csv %>
+  </div>
+
+  <%= f.submit "Generate Secret Santa List"  %>
+<% end %>
