@@ -19,10 +19,14 @@ class SecretSantasController < ApplicationController
       @data = SecretSantaSelectionService.new().roulette
       output_path = Rails.root.join('tmp', 'secret_santa_result.csv')
       CsvExportService.export_file(@data,output_path)
+      flash[:notice] = "Secret Santa result file has been successfully generated!" if File.exist?output_path
       send_file output_path, filename: "secret_santa_result.csv"
+    rescue CsvImportService::FileMissingError, CsvImportService::IncorrectHeaderError, CsvImportService::InvalidData => e
+      flash[:alert] = "CSV Import Error: #{e.message}"
+      render :index
     rescue Exception => e
-      puts "---there was error in create!"
-      puts e.full_message
+      flash[:alert] = "Error: #{e.message}"
+      render :index
       puts e.backtrace
     end
   end
